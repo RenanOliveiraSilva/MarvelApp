@@ -14,31 +14,61 @@ function getAuthParams() {
   return { ts, apikey: PUBLIC_KEY, hash };
 }
 
-export async function fetchCharacters() {
+export async function fetchCharacters(orderBy = 'name') {
   const params = {
     ...getAuthParams(),
-    limit: 10,
+    limit: 50,
     offset: 0,
+    orderBy,
 };
-
 
   const response = await api.get('/characters', { params });
   return response.data.data.results;
 }
 
-export async function fetchSeries() {
-    try {
-      const params = {
-        ...getAuthParams(),
-        limit: 20,
-        orderBy: '-modified', // 👈 ordena da mais nova para a mais antiga
-      };
-  
-      const response = await api.get('/series', { params });
-      return response.data.data.results;
-    } catch (error) {
-      console.error('Erro ao buscar séries:', error.response?.data || error.message);
-      return [];
-    }
+export async function fetchSeries(orderBy = '-startYear') {
+  try {
+    const params = {
+      ...getAuthParams(),
+      limit: 50,
+      orderBy, // 👈 agora você pode ordenar por qualquer campo
+    };
+
+    const response = await api.get('/series', { params });
+    return response.data.data.results;
+  } catch (error) {
+    console.error('Erro ao buscar séries:', error.response?.data || error.message);
+    return [];
   }
-  
+}
+
+export async function fetchComics(orderBy = '-onsaleDate') {
+  try {
+    const params = {
+      ...getAuthParams(),
+      limit: 20,
+      orderBy, // pode ser 'title' ou '-onsaleDate'
+    };
+
+    const response = await api.get('/comics', { params });
+    return response.data.data.results;
+  } catch (error) {
+    console.error('Erro ao buscar quadrinhos:', error.response?.data || error.message);
+    return [];
+  }
+}
+
+export async function fetchHeroByName(name) {
+  try {
+    const params = {
+      ...getAuthParams(),
+      nameStartsWith: name,
+      limit: 1,
+    };
+    const response = await api.get('/characters', { params });
+    return response.data.data.results[0] || null;
+  } catch (error) {
+    console.error('Erro ao buscar herói por nome:', error);
+    return null;
+  }
+}

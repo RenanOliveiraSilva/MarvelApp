@@ -82,7 +82,7 @@ export default function Cadastro() {
                 value={password}
                 onChangeText={setPassword}
                 />
-            <MaterialIcons name="visibility-off" size={20} color="#991B1B" />
+            {/* <MaterialIcons name="visibility-off" size={20} color="#991B1B" /> */}
             </View>
         </View>
 

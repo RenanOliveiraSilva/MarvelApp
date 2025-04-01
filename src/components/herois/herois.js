@@ -6,21 +6,24 @@ import {
   Image,
   StyleSheet,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
-import { fetchSeries } from '../../services/api';
+import { fetchCharacters } from '../../services/api';
 import { ImageBackground } from 'react-native';
 import NavBar from '../navbar/navbar';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Filmes() {
+export default function Herois() {
   const [recentSeries, setRecentSeries] = useState([]);
   const [titleSortedSeries, setTitleSortedSeries] = useState([]);
   const [loading, setLoading] = useState(true); // 👈 novo estado
+  const navigation = useNavigation(); // 👈 hook para navegação
 
   useEffect(() => {
     async function loadSeries() {
       setLoading(true);
-      const byDate = await fetchSeries('startYear');
-      const byTitle = await fetchSeries('title');
+      const byDate = await fetchCharacters('-modified');
+      const byTitle = await fetchCharacters('name');
 
       setRecentSeries(
         byDate.filter((item) => !item.thumbnail.path.includes('image_not_available'))
@@ -36,20 +39,20 @@ export default function Filmes() {
     loadSeries();
   }, []);
 
-    if (loading) {
-      return (
-          <ImageBackground
-          source={require("../../../assets/mainBackground.png")} // <-- imagem que você mostrou
-          style={styles.background}
-          resizeMode="cover"
-        >
-          <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#B3001B" />
-              <Text style={styles.loadingText}>Carregando Séries...</Text>
-          </View>
-        </ImageBackground>
-      );
-    }
+  if (loading) {
+    return (
+        <ImageBackground
+        source={require("../../../assets/mainBackground.png")} // <-- imagem que você mostrou
+        style={styles.background}
+        resizeMode="cover"
+      >
+        <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color="#B3001B" />
+            <Text style={styles.loadingText}>Carregando heróis...</Text>
+        </View>
+      </ImageBackground>
+    );
+  }
 
   return (
       <ImageBackground
@@ -57,7 +60,7 @@ export default function Filmes() {
         style={styles.background}
         resizeMode="cover"
       >
-         <NavBar initialTab="Séries" />
+          <NavBar initialTab="Heróis" />
                 <View style={styles.container}>
                   <Text style={styles.title}>Mais Antigos</Text>
                   <FlatList
@@ -66,13 +69,16 @@ export default function Filmes() {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (
-                      <View style={styles.card}>
+                      <TouchableOpacity
+                      onPress={() => navigation.navigate('HeroDetail', { hero: item })}
+                      style={styles.card}
+                      >
                         <Image
                           source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
                           style={styles.image}
                         />
-                        <Text style={styles.name}>{item.title}</Text>
-                      </View>
+                        <Text style={styles.name}>{item.name}</Text>
+                      </TouchableOpacity>
                     )}
                   />
 
@@ -83,19 +89,24 @@ export default function Filmes() {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => (
-                      <View style={styles.card}>
+                      <TouchableOpacity
+                      onPress={() => navigation.navigate('HeroDetail', { hero: item })}
+                      style={styles.card}
+                      >
                         <Image
                           source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
                           style={styles.image}
                         />
-                        <Text style={styles.name}>{item.title}</Text>
-                      </View>
+                        <Text style={styles.name}>{item.name}</Text>
+                      </TouchableOpacity>
                     )}
                   />
                 </View>
     </ImageBackground>
   );
-}const styles = StyleSheet.create({
+}
+
+const styles = StyleSheet.create({
     container: {
       flex: 1,
       padding: 16,

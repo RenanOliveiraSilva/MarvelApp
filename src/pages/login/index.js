@@ -27,7 +27,7 @@ export default function Login() {
       }
       const userJson = JSON.parse(user);
       if (userJson.email === email && userJson.password === password) {
-        navigation.navigate("Main");
+        navigation.navigate("Series");
       } else {
         alert("E-mail ou senha inválidos!");
       }
@@ -80,7 +80,7 @@ export default function Login() {
                 value={password}
                 onChangeText={setPassword}
                 />
-            <MaterialIcons name="visibility-off" size={20} color="#991B1B" />
+            {/* <MaterialIcons name="visibility-off" size={20} color="#991B1B" /> */}
             </View>
         </View>
 
