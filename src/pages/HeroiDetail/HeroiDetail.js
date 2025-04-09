@@ -40,6 +40,7 @@ export default function HeroDetail() {
     if (isFavorite) {
       // remove
       updated = favorites.filter((item) => item.id !== hero.id);
+      
     } else {
       // adiciona
       updated = [...favorites, hero];

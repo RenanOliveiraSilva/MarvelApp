@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
       backgroundColor: 'transparent',
     },
     activeTab: {
-      backgroundColor: '#3B4873', // destaque para aba ativa
+      backgroundColor: 'transparent', // destaque para aba ativa
     },
     tabText: {
       color: '#ccc',

@@ -9,7 +9,7 @@ import Filmes from './components/filmes/filmes';
 import Herois from './components/herois/herois';
 import Quadrinhos from './components/quadrinhos/quadrinhos';
 import HeroDetail from './pages/HeroiDetail/HeroiDetail';
-import Favoritos from './pages/Favorite/Favorite';
+import Favoritos from './pages/Favorites/FavoriteHome/Favorite';
 
 const Stack = createStackNavigator();
 

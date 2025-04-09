@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   Image,
-  StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   TextInput,
@@ -14,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { fetchHeroByName } from '../../services/api';
 import NavBar from '../../components/navbar/navbar';
+import { styles } from './style';
 
 export default function Favoritos() {
   const [favorites, setFavorites] = useState([]);
@@ -93,7 +93,7 @@ export default function Favoritos() {
           returnKeyType="search"
         />
         {searchLoading && (
-          <ActivityIndicator size="small" color="#E11D48" style={{ marginTop: 8 }} />
+          <ActivityIndicator size="small" color="#E11D48" style={{ zIndex: 1 }} />
         )}
       </View>
 
@@ -104,7 +104,7 @@ export default function Favoritos() {
       ) : (
         <FlatList
           data={favorites}
-          style={{ paddingHorizontal: 16 }}
+          style={{ paddingHorizontal: 16, marginTop: 16 }}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
@@ -124,64 +124,3 @@ export default function Favoritos() {
     </View>
   );
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0d0c26'
-    
-  },
-  title: {
-    color: '#fff',
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    textAlign: 'center',
-    marginTop: '8%',
-  },
-  inputContainer: {
-    marginBottom: 16,
-    paddingHorizontal: 16
-  },
-  input: {
-    backgroundColor: '#1c1b40',
-    color: '#fff',
-    padding: 12,
-    borderRadius: 8,
-    fontSize: 14,
-  },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1c1b40',
-    marginBottom: 12,
-    borderRadius: 8,
-    padding: 10
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 16,
-  },
-  name: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  empty: {
-    color: '#ccc',
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 20,
-  },
-  loadingText: {
-    color: '#fff',
-    marginTop: 12,
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0d0c26',
-  },
-});
