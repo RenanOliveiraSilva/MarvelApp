@@ -11,11 +11,11 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { fetchHeroByName } from '../../services/api';
-import NavBar from '../../components/navbar/navbar';
+import { fetchHeroByName } from '../../../services/api';
+import NavBar from '../../../components/navbar/navbar';
 import { styles } from './style';
 
-export default function Favoritos() {
+export default function HeroisFavoritos() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');

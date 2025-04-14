@@ -6,15 +6,18 @@ import {
   Image,
   StyleSheet,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
+  TouchableOpacity
 } from 'react-native';
 import { fetchComics } from '../../services/api';
 import NavBar from '../navbar/navbar';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Quadrinhos() {
   const [recentComics, setRecentComics] = useState([]);
   const [titleSortedComics, setTitleSortedComics] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation(); // 👈 hook para navegação
 
   useEffect(() => {
     async function loadComics() {
@@ -66,11 +69,18 @@ export default function Quadrinhos() {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Image
-                source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
-                style={styles.image}
-              />
-              <Text style={styles.name}>{item.title}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ComicDetail', { comic: item })}
+                style={styles.card}
+              >
+
+                <Image
+                  source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
+                  style={styles.image}
+                />
+              
+                <Text style={styles.name}>{item.title}</Text>
+              </TouchableOpacity>
             </View>
           )}
         />
@@ -83,11 +93,18 @@ export default function Quadrinhos() {
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Image
-                source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
-                style={styles.image}
-              />
-              <Text style={styles.name}>{item.title}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('ComicDetail', { comic: item })}
+                style={styles.card}
+              >
+
+                <Image
+                  source={{ uri: `${item.thumbnail.path}.${item.thumbnail.extension}` }}
+                  style={styles.image}
+                />
+              
+                <Text style={styles.name}>{item.title}</Text>
+              </TouchableOpacity>
             </View>
           )}
         />

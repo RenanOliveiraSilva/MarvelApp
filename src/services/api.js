@@ -72,3 +72,23 @@ export async function fetchHeroByName(name) {
     return null;
   }
 }
+
+
+export async function fetchComicsByName(name) {
+  try {
+    const params = {
+      ...getAuthParams(),
+      titleStartsWith: name,
+      limit: 1,
+    };
+
+    const response = await api.get('/comics', { params });
+
+    // Retorna o primeiro resultado, ou null se não encontrar
+    return response.data.data.results[0] || null;
+
+  } catch (error) {
+    console.error('Erro ao buscar quadrinho por nome:', error);
+    return null;
+  }
+}
